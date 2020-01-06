@@ -1,0 +1,5 @@
+ename,norm,normargu,valuefrom,modifier,name,style,comment,AddNeg
+Outcome,evtmax_1,NA,Pshare_Tshare,NA,Pshare_Tshare_Outcome,multiply,taskness,FALSE
+Outcome,evtmax_1,NA,Pshare_Tkeep,NA,Pshare_Tkeep_Outcome,multiply,taskness,FALSE
+Outcome,evtmax_1,NA,Pkeep_Tshare,NA,Pkeep_Tshare_Outcome,multiply,taskness,FALSE
+Outcome,evtmax_1,NA,Pkeep_Tkeep,NA,Pkeep_Tkeep_Outcome,multiply,taskness,FALSE

@@ -1,0 +1,13 @@
+ename,norm,normargu,valuefrom,modifier,name,style,comment,AddNeg,EVNUM
+Outcome,evtmax_1,NA,trustee_Good,NA,TGood_Outcome,multiply,taskness,FALSE,2
+Outcome,evtmax_1,NA,trustee_Bad,NA,TBad_Outcome,multiply,taskness,FALSE,3
+Outcome,evtmax_2,NA,trustee_Neutral,NA,TNeutral_Outcome,multiply,taskness,FALSE,4
+Decision,evtmax_1,NA,trustee_Good,NA,TGood_Decision,multiply,taskness,FALSE,5
+Decision,evtmax_1,NA,trustee_Bad,NA,TBad_Decision,multiply,taskness,FALSE,6
+Decision,evtmax_1,NA,trustee_Neutral,NA,TNeutral_Decision,multiply,taskness,FALSE,7
+Outcome,evtmax_1,NA,V_postupdate,trustee_Good,TGood_Vpost,multiply,taskness,FALSE,8
+Outcome,evtmax_1,NA,V_postupdate,trustee_Bad,TBad_Vpost,multiply,taskness,FALSE,9
+Outcome,evtmax_1,NA,V_postupdate,trustee_Neutral,TNeutral_Vpost,multiply,taskness,FALSE,10
+Outcome,evtmax_1,NA,PE_1,trustee_Good,TGood_PE,multiply,taskness,FALSE,11
+Outcome,evtmax_1,NA,PE_1,trustee_Bad,TBad_PE,multiply,taskness,FALSE,12
+Outcome,evtmax_1,NA,PE_1,trustee_Neutral,TNeutral_PE,multiply,taskness,FALSE,13

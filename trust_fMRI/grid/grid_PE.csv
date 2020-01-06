@@ -1,0 +1,4 @@
+ename,norm,normargu,valuefrom,modifier,name,style,AddNeg
+Decision,evtmax_1,NA,Decision_evt,NA,Decision_evt,multiply,FALSE
+Outcome,evtmax_1,NA,Outcome_evt,NA,Outcome_evt,multiply,FALSE
+Outcome,evtmax_1,NA,PE_policy,NA,PE_outcome,multiply,FALSE

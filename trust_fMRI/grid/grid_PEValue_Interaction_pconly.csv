@@ -1,0 +1,17 @@
+ename,norm,normargu,valuefrom,modifier,name,style,comment,AddNeg,EVNUM
+Outcome,evtmax_1,NA,trustee_Good,NA,TGood_Outcome,multiply,taskness,FALSE,1
+Outcome,evtmax_1,NA,trustee_Bad,NA,TBad_Outcome,multiply,taskness,FALSE,2
+Outcome,evtmax_1,NA,trustee_Neutral,NA,TNeutral_Outcome,multiply,taskness,FALSE,3
+Outcome,evtmax_1,NA,trustee_PC,NA,TPC_Outcome,multiply,taskness,FALSE,4
+Decision,evtmax_1,NA,trustee_Good,NA,TGood_Decision,multiply,taskness,FALSE,5
+Decision,evtmax_1,NA,trustee_Bad,NA,TBad_Decision,multiply,taskness,FALSE,6
+Decision,evtmax_1,NA,trustee_Neutral,NA,TNeutral_Decision,multiply,taskness,FALSE,7
+Decision,evtmax_1,NA,trustee_PC,NA,TPC_Decision,multiply,taskness,FALSE,8
+Outcome,evtmax_1,NA,V_policy,trustee_Good,TGood_Vpost,multiply,taskness,FALSE,9
+Outcome,evtmax_1,NA,V_policy,trustee_Bad,TBad_Vpost,multiply,taskness,FALSE,10
+Outcome,evtmax_1,NA,V_policy,trustee_Neutral,TNeutral_Vpost,multiply,taskness,FALSE,11
+Outcome,evtmax_1,NA,V_policy,trustee_PC,TPC_Vpost,multiply,taskness,FALSE,12
+Outcome,evtmax_1,NA,PE_policy,trustee_Good,TGood_PE,multiply,taskness,FALSE,13
+Outcome,evtmax_1,NA,PE_policy,trustee_Bad,TBad_PE,multiply,taskness,FALSE,14
+Outcome,evtmax_1,NA,PE_policy,trustee_Neutral,TNeutral_PE,multiply,taskness,FALSE,15
+Outcome,evtmax_1,NA,PE_policy,trustee_PC,TPC_PE,multiply,taskness,FALSE,16
