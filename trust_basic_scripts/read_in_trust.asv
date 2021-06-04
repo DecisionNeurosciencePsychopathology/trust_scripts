@@ -8,12 +8,12 @@ else
 	b.fname = fname; 
 end
 % check for file format
-if(checkFileBOM(fname)) % file format is UTF-16 IEEE-LE
-    fprintf('\tfile: ''%s''\n\tis in UTF16-LE format\n',fname);
-    fprintf('\t\tconverting to ASCII...');
-    utf2ascii(b.fname,'fast'); % convert it (fast = no need to verify BOM) %was uni2ascii()
-    fprintf('\t done\n');
-end
+% if(checkFileBOM(fname)) % file format is UTF-16 IEEE-LE
+%     fprintf('\tfile: ''%s''\n\tis in UTF16-LE format\n',fname);
+%     fprintf('\t\tconverting to ASCII...');
+%     utf2ascii(b.fname,'fast'); % convert it (fast = no need to verify BOM) %was uni2ascii()
+%     fprintf('\t done\n');
+% end
 %read the raw text file
 fid = fopen(b.fname,'r');
 

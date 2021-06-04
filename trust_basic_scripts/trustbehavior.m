@@ -10,34 +10,36 @@ function b = trustbehavior(id,destination_path,local_dir)
 % data_dir_str = 'C:\Users\wilsonj3\Desktop\trust_behav_data_I_missed_scan';
 
 %New pathway
-data_dir_str = sprintf([local_dir '%d'],id);
-filename = sprintf([destination_path 'trust%d.mat'],id);
+cd(local_dir);
+%data_dir_str = sprintf([local_dir '%d'],id);
+filename = strcat('trust_', id);
+%filename = sprintf([destination_path 'trust%d.mat'],id);
 %filename = sprintf('E:/data/trust/scan_behavior/trust%d.mat',id);
 
-%Uncomment the next 2 lines for hallquist data!!
- data_dir_str = glob([local_dir '*' num2str(id)]);
- data_dir_str = data_dir_str{1};
+% %Uncomment the next 2 lines for hallquist data!!
+%  data_dir_str = glob([local_dir '*' num2str(id)]);
+%  data_dir_str = data_dir_str{1};
 
 
 %% Find the eprime file - MODIFY PATHS IF NEEDED
 %cd('/Users/polinavanyukov/Box Sync/Project Trust Game/eprime')
 %cd(['C:\Users\',username ,'\Box Sync\Suicide studies\data'])
 %cd(['/Volumes/bek/trust_analyses/temp_trust_data'])
-cd(data_dir_str)
+% cd(data_dir_str)
 
-if id>209999 && id<300000
+if id>209999 & id<300000
     id5=sprintf('%d',(id-200000));
-elseif id<209999 && id>200999
+elseif id<209999 & id>200999
     id5=sprintf('0%d',(id-200000));
-elseif id<200999 && id>200099
+elseif id<200999 & id>200099
     id5=sprintf('00%d',(id-200000));
-elseif id<200099 && id>200009
+elseif id<200099 & id>200009
     id5=sprintf('000%d',(id-200000));
-elseif id<200009 && id>200000
+elseif id<200009 & id>200000
     id5=sprintf('0000%d',(id-200000));
 elseif id<100000
     id5=sprintf('%d',id);
-elseif id>109999 && id<200000
+elseif id>109999 & id<200000
     id5=sprintf('%d',(id-100000));
 elseif id>880000
     stringid=num2str(id);
@@ -47,13 +49,19 @@ else
     id5=stringid(2:end);
 end
 %10/21/2016 -- for now
-% % subdir=dir(sprintf('%d*',id));
+%subdir=dir(id);
 % % 
-% % cd(subdir.name)
+ cd(id)
 
-file = dir(sprintf('trust*scan*%d*.txt', id));
+ matfile = dir('*.mat'); 
+
+ if ~isempty(matfile)
+     copyfile(matfile.name, destination_path)
+ else  
+     
+file = dir('trust*scan_rs*.txt');
 if isempty(file)
-  file = dir(sprintf('trust*%s*.txt', id5));  
+  file = dir('trust*%s*.txt');  
 end
 
 fname = file.name;
@@ -207,11 +215,13 @@ for ind=start+1:trials
     end
 end
 
+cd(destination_path);
 save(filename, 'b');
 
 %%
 
 return
+ end
 
 %JW: Functions
 %If erroneous subjs creep up
@@ -221,6 +231,7 @@ global skip_subjs
     fprintf(['\n\nTo many files for this subj review for later!',...
         'OR to something is wrong with the trials!\n'])
     save skip_subjs skip_subjs
+
 
 
 
