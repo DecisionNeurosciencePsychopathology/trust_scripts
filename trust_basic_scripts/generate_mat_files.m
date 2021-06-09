@@ -1,10 +1,10 @@
 local_dir = 'C:\Users\timot\Desktop\trust_data';
 cd(local_dir);
 
-destination_path = 'C:\Users\timot\Desktop\trust_test';
+destination_path = 'C:\Users\timot\Desktop\trust_processed';
 
 id = dir;
-id = id(~startsWith({id.name}, 'ex_'));
+id = id(~startsWith({id.name}, 'ex_')); %exclude a couple folders that do not contain relevant subject data
 
 % %one sub
 %id = id(strcmp({id.name}, '221603'));
@@ -16,4 +16,7 @@ for i = 3:length(id)
     trustbehavior(mm, destination_path, local_dir)
 end
 
-trust_group
+cd(destination_path)
+mkdir group_data
+
+trust_group %process into a single group data file
