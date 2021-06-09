@@ -55,11 +55,11 @@ end
 
  matfile = dir('*.mat'); 
 
- if ~isempty(matfile)
-     copyfile(matfile.name, destination_path)
- else  
+%  if ~isempty(matfile)
+%      copyfile(matfile.name, destination_path)
+%  else  
      
-file = dir('trust*scan_rs*.txt');
+ file = dir('trust*scan_rs*.txt');
 if isempty(file)
   file = dir('trust*%s*.txt');  
 end
@@ -110,9 +110,10 @@ if length(b.TrialNumber) > 192
 end
 
 %Decisions share = 1; keep = -1; no response = 0;
-share =~cellfun(@isempty,strfind(b.PartDecides(start+1:trials),'share'));
-keep =~cellfun(@isempty,strfind(b.PartDecides(start+1:trials),'keep'));
-noresponse = ~cellfun(@isempty,strfind(b.PartDecides(start+1:trials),'noresponse'));
+share = strcmp(b.PartDecides(start+1:trials),'share');
+keep =strcmp(b.PartDecides(start+1:trials),'keep');
+noresponse = strcmp(b.PartDecides(start+1:trials),'noresponse');
+assert(length(share)==length(keep) & length(keep)==length(noresponse),'different lengths');
 b.decisions = zeros(trials-start, 1);
 b.decisions(share) = 1;
 b.decisions(keep) = -1;
@@ -231,7 +232,4 @@ global skip_subjs
     fprintf(['\n\nTo many files for this subj review for later!',...
         'OR to something is wrong with the trials!\n'])
     save skip_subjs skip_subjs
-
-
-
-
+end
