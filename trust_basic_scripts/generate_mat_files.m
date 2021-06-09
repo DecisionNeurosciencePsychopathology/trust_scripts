@@ -15,3 +15,5 @@ for i = 3:length(id)
     mm = id(i).name;
     trustbehavior(mm, destination_path, local_dir)
 end
+
+trust_group

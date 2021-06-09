@@ -18,7 +18,7 @@ function [] = trust_group()
 clear all;
 
 %data_location = '/Users/polinavanyukov/Box Sync/Project Trust Game/data/processed/scan_behavior';
-data_location = '/Users/polinavanyukov/Box Sync/Project Trust Game/data/processed/beha_behavior';
+data_location = 'C:\Users\timot\Desktop\trust_test\';
 cd(data_location)
 
 files_mat = dir('trust*.mat');
@@ -31,7 +31,6 @@ c.Names = {'subject','trialnum','trustee','exchange','reward_schedule',...
     'exch2','s_decision','t_decision','decision_Onset','decision_RT',...
     'feedback_Onset','feedback_Offset'};
 c.Data = zeros([0,12]);
-c.Identity = vertcat(repmat(1,48,1),repmat(2, 48, 1),repmat(3, 48, 1), repmat(4, 48, 1));
 
 %% subject loop
 for index=1:num_of_subjects
@@ -41,21 +40,39 @@ for index=1:num_of_subjects
     fprintf('File processing: %s\n', file_name);
     start = 0;
     trials = length(b.TrialNumber);
+    conditions= length(unique(b.ConditionOrder));
        
     %% identifying the beginning of nonpractice trials
-    if length(b.TrialNumber) > 192
+    if conditions > 3 % for subs with 4 conditions instead of 3
+        if length(b.TrialNumber) > 192
         start = length(b.TrialNumber) - 192;
+        end
+    else % for subs with 3 conditions
+        if length(b.TrialNumber) > 144
+        start = length(b.TrialNumber) - 144;
+        end
     end
       
-    c.s(index).trialnum = transpose([1:192]);
-    c.s(index).exchange = transpose([1:48 1:48 1:48 1:48]);
+    c.s(index).trialnum = transpose([1:trials]);
+    c.s(index).exchange = transpose(repmat([1:48], 1, conditions));
+    
     %% correcting for incomplete experimental sessions
-    if length(b.Reversal)<192
-        c.s(index).reward_schedule(1:length(b.Reversal)) = b.Reversal(start+1:length(b.Reversal));
-        c.s(index).reward_schedule(length(b.Reversal)+1:trials)=99;
-        c.s(index).reward_schedule = c.s(index).reward_schedule';
-    else
-        c.s(index).reward_schedule = b.Reversal(start+1:trials);
+    if conditions > 3 % for subs with 4 conditions instead of 3
+        if length(b.Reversal)<192
+            c.s(index).reward_schedule(1:length(b.Reversal)) = b.Reversal(start+1:length(b.Reversal));
+            c.s(index).reward_schedule(length(b.Reversal)+1:trials)=99;
+            c.s(index).reward_schedule = c.s(index).reward_schedule';
+        else
+            c.s(index).reward_schedule = b.Reversal(start+1:trials);
+        end
+    else %for subs with 3 conditions
+        if length(b.Reversal)<144
+            c.s(index).reward_schedule(1:length(b.Reversal)) = b.Reversal(start+1:length(b.Reversal));
+            c.s(index).reward_schedule(length(b.Reversal)+1:trials)=99;
+            c.s(index).reward_schedule = c.s(index).reward_schedule';
+        else
+            c.s(index).reward_schedule = b.Reversal(start+1:trials);
+        end
     end
     
     %% Condition = good = 1; bad = 2; neutral = 3; computer = 4;
@@ -80,7 +97,8 @@ for index=1:num_of_subjects
     c.s(index).reversal(eightyeight)=1;
     c.s(index).reversal(twentyfive)=-1;
     
-    c.s(index).exch2 = transpose([1:16 1:16 1:16 1:16 1:16 1:16 1:16 1:16 1:16 1:16 1:16 1:16]);
+    c.s(index).exch2 = transpose(repmat([1:16], 1, conditions*3));
+   
     
     %% Decisions share = 1; keep = -1; no reponse = 0;
     share =~cellfun(@isempty,strfind(b.PartDecides(start+1:trials),'share'));
@@ -129,7 +147,8 @@ x = c.Data;
 % data_dir_str = '/Users/polinavanyukov/Box Sync/Project Trust Game/data/processed/scan_behavior/group_data';
 % save(sprintf(strcat(data_dir_str,'/scan_behavior_data.mat')),'x'); %data only
 
-data_dir_str = '/Users/polinavanyukov/Box Sync/Project Trust Game/data/processed/beha_behavior/group_data';
+%data_dir_str = '/Users/polinavanyukov/Box Sync/Project Trust Game/data/processed/beha_behavior/group_data';
+data_dir_str = 'C:\Users\timot\Desktop\trust_test\group_data\';
 save(sprintf(strcat(data_dir_str,'/beha_behavior_data.mat')),'x'); %data only
 
 
