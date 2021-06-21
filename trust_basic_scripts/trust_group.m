@@ -18,7 +18,8 @@ function [] = trust_group()
 clear all;
 
 %data_location = '/Users/polinavanyukov/Box Sync/Project Trust Game/data/processed/scan_behavior';
-data_location = 'C:\Users\timot\Desktop\trust_test\';
+data_location = 'C:\Users\timot\Desktop\trust_processed\';
+%data_location = 'C:\Users\timot\Desktop\s1\';
 cd(data_location)
 
 files_mat = dir('trust*.mat');
@@ -101,9 +102,9 @@ for index=1:num_of_subjects
    
     
     %% Decisions share = 1; keep = -1; no reponse = 0;
-    share =~cellfun(@isempty,strfind(b.PartDecides(start+1:trials),'share'));
-    keep =~cellfun(@isempty,strfind(b.PartDecides(start+1:trials),'keep'));
-    noresponse = ~cellfun(@isempty,strfind(b.PartDecides(start+1:trials),'noresponse'));
+    share =strcmp(b.PartDecides(start+1:trials),'share');
+    keep =strcmp(b.PartDecides(start+1:trials),'keep');
+    noresponse = strcmp(b.PartDecides(start+1:trials),'noresponse');;
     
     c.s(index).s_decides = zeros(trials-start, 1);
     c.s(index).s_decides(share) = 1;
@@ -148,7 +149,8 @@ x = c.Data;
 % save(sprintf(strcat(data_dir_str,'/scan_behavior_data.mat')),'x'); %data only
 
 %data_dir_str = '/Users/polinavanyukov/Box Sync/Project Trust Game/data/processed/beha_behavior/group_data';
-data_dir_str = 'C:\Users\timot\Desktop\trust_test\group_data\';
+data_dir_str = 'C:\Users\timot\Desktop\trust_processed\group_data\';
+%data_dir_str = 'C:\Users\timot\Desktop\s1\gd\';
 save(sprintf(strcat(data_dir_str,'/beha_behavior_data.mat')),'x'); %data only
 
 
