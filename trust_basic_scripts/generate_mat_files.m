@@ -1,8 +1,7 @@
-local_dir = 'C:\Users\timot\Desktop\trust_data';
+local_dir = 'C:\Users\timot\Box\skinner\personal_folders\Tim\trust_bsocial\data';
 cd(local_dir);
 
-destination_path = 'C:\Users\timot\Desktop\trust_processed';
-
+destination_path = 'C:\Users\timot\Box\skinner\personal_folders\Tim\trust_bsocial\data\processed';
 id = dir;
 id = id(~startsWith({id.name}, 'ex_')); %exclude a couple folders that do not contain relevant subject data
 
