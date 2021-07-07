@@ -110,12 +110,12 @@ else
     g_fname = @g_trust_softmax_ED;  % observation function (softmax mapping), evaluates Q(share), w/ kappa parameter
 end
 
-if SVM == 1 
-    if counter == 0
-        f_fname = @f_trust_SVM1;
-        g_fname = @g_trust_SVM1;
-    end
-end
+% if SVM == 1 
+%     if counter == 0
+%         f_fname = @f_trust_SVM1;
+%         g_fname = @g_trust_SVM1;
+%     end
+%end
 
 %h_fname = @h_randOutcome; % feedback function (reward schedule)
 % h_fname = @h_Id; % feedback function, reads from u
@@ -138,10 +138,10 @@ n_hidden_states = 2; %track the value of sharing and PE
 %cd /Users/localadmin/Google' Drive'/skinner/trust/scan_behavior/
 % exemplar Qlearning subjects: 881105, 213704, 216806, 220043
 %cd(datalocation);
-if strcmp('46069', id)
-    id = '046069';
-end
-load([datalocation sprintf('trust%d',id)])
+% if strcmp('46069', id)
+%     id = '046069';
+% end
+load([datalocation sprintf('trust_%s',id)])
 
 ntrials = length(b.TrialNumber);
 

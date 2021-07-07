@@ -5,7 +5,7 @@ close all;
 %on the machine you are currently working on!
 os = computer;
 if strcmp(os(1:end-2),'PCWIN') %If using pc
-    datalocation = 'E:/Box Sync/Project Trust Game/data/processed/scan_behavior/'; %Set path pointing to single subjects' .mat files
+    datalocation = 'C:\Users\timot\Box\skinner\personal_folders\Tim\trust_bsocial\data\processed\'; %Set path pointing to single subjects' .mat files
 else
     [~, me] = system('whoami'); %If using mac or linux
     me = strtrim(me);
@@ -43,10 +43,10 @@ parfor ct = 1:num_of_subjects
     filename=files(ct).name;
     fprintf('File processing: %s\n', filename);
     id = filename(isstrprop(filename,'digit'));
-    if not(strcmp(id, '881209')|| strcmp(id, '217909'))
+   % if not(strcmp(id, '881209')|| strcmp(id, '217909'))
         [posterior, out] = trust_Qlearning_ushifted(datalocation, id, counter, multisession, fixed_params_across_runs, sigma_kappa, reputation_sensitive, humanity, valence_p, valence_n, assymetry_choices, regret);
         L(ct) = out.F;
-    end
+   % end
 end
 L_name = sprintf('L_counter%d_multisession%d_fixed%d_SigmaKappa%d_reputation%d_humanity%d_valence_p%d_valence_n%d_assymetry_choice%d_regret%d',counter, multisession, fixed_params_across_runs, sigma_kappa, reputation_sensitive, humanity, valence_p, valence_n, assymetry_choices, regret);
 save(char(L_name), 'L');

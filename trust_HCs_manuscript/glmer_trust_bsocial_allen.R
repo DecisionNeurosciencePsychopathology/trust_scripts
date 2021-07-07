@@ -3,23 +3,31 @@ library(lsmeans)
 library(data.table)
 library(nlme)
 library(car)
+library(R.matlab)
+library(tidyverse)
 
 # load data
 library(readr)
 
-hall_behavior = read_delim("~/Box Sync/Project Trust Game/analyses/manuscript/hallquist_behavior.txt",
-                           "\t", escape_double = FALSE, trim_ws = TRUE)
-b = data.table(hall_behavior)
+behav <-  readMat("C:/Users/timot/Box/skinner/personal_folders/Tim/trust_bsocial/data/processed/group_data/beha_behavioral_group.mat")
+behav_cols <- unlist(behav$c[[1]])
+behav_data <- data.frame(unlist(behav$c[[2]]))
+colnames(behav_data) <- behav_cols
+
+#bsocial_behavior = read_delim("~/Box Sync/Project Trust Game/analyses/manuscript/hallquist_behavior.txt",
+#                           "\t", escape_double = FALSE, trim_ws = TRUE)
+b = behav_data
 View(b)
 
-#lag variable: previous trustee decision
-b[, pt_decision:=c(NA, t_decision[-.N]), by=trustee]
+#lag variable: previous trustee decision (pt_decision)
+b <- b %>% group_by(subject, trustee) %>% mutate(pt_decision= lag(t_decision)) %>% ungroup()
+#b[, pt_decision:=c(NA, t_decision[-.N]), by=trustee]
 
 #getting rid of uncoded trustees
-b = b[b$trustee > 0]
+b <- b %>% filter(trustee > 0)
 #getting rid of missed responses
 #b = b[b$s_decision != 0]
-#re-coding missed reponses
+#re-coding missed responses
 b$missed = 0
 b$missed[b$s_decision == 0] = 1
 
@@ -36,25 +44,28 @@ b$pt_decision = as.factor(b$pt_decision)
 b$missed = as.factor(b$missed)
 
 # add previous subject decision
-b[, s_decision_lag1:=c(NA, s_decision[-.N]), by=trustee]
-b[, s_decision_lag2:=c(NA, s_decision_lag1[-.N]), by=trustee]
-b[, s_decision_lag3:=c(NA, s_decision_lag2[-.N]), by=trustee]
-b[, s_decision_lag4:=c(NA, s_decision_lag3[-.N]), by=trustee]
+b <- b %>% group_by(subject, trustee) %>% mutate(s_decision_lag1= lag(s_decision), s_decision_lag2 = lag(s_decision_lag1), s_decision_lag3 = lag(s_decision_lag2), s_decision_lag4 = lag(s_decision_lag3)) %>% ungroup()
 
 #recalculating RT
 b$RT_calc = b$feedback_Onset-b$decision_Onset
 
 #mean-centering exchange
-b$mc_exchange = b$exchange - mean(1:48);
+b$mc_exchange = b$exchange - 24.5; #24.5 is halfway through 1-48 (so coefficients will be interpreted at that ex)
 
 #calculating aggregate means
 #RTmeansBYsubjectBYtrustee=aggregate(b[,b$RT_calc], list(b$subject,b$trustee),mean)
-RTmeansBYsubject=aggregate(b[,b$RT_calc], list(b$subject),mean)
-View(RTmeansBYsubject)
+#commenting out since we do not actually use these below
+#b <- b %>% group_by(subject) %>% mutate(RTmeanxsub = mean(RT_calc, na.rm = T)) %>% ungroup() 
+
+#RTmeansBYsubject=aggregate(b[,b$RT_calc], list(b$subject),mean)
+#View(RTmeansBYsubject)
+
+#drop the computer condition
+b <- b %>% filter(trustee != 4)
 
 attach(b)
 #running glmer: w/ varying intercept and slope for subject
-m0 <- glmer(s_decision ~ trustee*mc_exchange*pt_decision + (1|subject), binomial(link = "logit"), data = b,na.action = na.omit)
+m0 <- glmer(as.factor(s_decision) ~ trustee*mc_exchange*pt_decision + (1|subject), binomial(link = "logit"), data = b,na.action = na.omit, glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000)))
 anova(m0)
 summary(m0)
 
@@ -70,7 +81,7 @@ anova(m2,m3)
 #establishing a reference grid
 likelihood.m3 <- ref.grid(m3)
 
-#marginal means of trustree, plus contrast
+#marginal means of trustee, plus contrast
 trustee.lsm <- lsmeans(likelihood.m3, "trustee")
 trustee.sum <- summary(trustee.lsm, infer = c(TRUE,TRUE), level = 0.95, adjust = "bon")
 contrast(trustee.lsm, method = "pairwise", adjust ="bon")

@@ -12,7 +12,7 @@ for j = 1:length(subdirs)
     %on the machine you are currently working on!
     os = computer;
     if strcmp(os(1:end-2),'PCWIN')
-        datalocation = glob(['E:\trust_model_comparision\trust_rl_VBA\' subdirs{j} filesep]);
+        datalocation = glob(['C:\Users\timot\Box\skinner\personal_folders\Tim\trust_bsocial\data\processed' subdirs{j} filesep]);
     else
         [~, me] = system('whoami');
         me = strtrim(me);
