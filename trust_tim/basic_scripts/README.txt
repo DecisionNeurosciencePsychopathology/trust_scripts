@@ -1,0 +1,2 @@
+1. generate_mat_files.m: this file takes the raw data from local_dir, which you specify, and returns processed data in destination_path (which you also specify). 
+2. trustbehavior.m: this is in the main function that loops over every id and processes th
